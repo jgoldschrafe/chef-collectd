@@ -17,12 +17,27 @@
 # limitations under the License.
 #
 
-default[:collectd][:base_dir] = "/var/lib/collectd"
-default[:collectd][:plugin_dir] = "/usr/lib/collectd"
-default[:collectd][:types_db] = ["/usr/share/collectd/types.db"]
 default[:collectd][:interval] = 10
 default[:collectd][:read_threads] = 5
-default[:collectd][:pkg_name] = "collectd-core"
+
+case node[:platform_family]
+when "mac_os_x"
+  default[:collectd][:base_dir] = "/usr/local/var/lib/collectd"
+  default[:collectd][:cfg_dir] = "/usr/local/etc/collectd"
+  default[:collectd][:cfg_group] = "wheel"
+  default[:collectd][:plugin_dir] = "/usr/local/lib/collectd"
+  default[:collectd][:types_db] = ["/usr/local/share/collectd/types.db"]
+  default[:collectd][:pkg_name] = "collectd"
+  default[:collectd][:svc_name] = "homebrew.mxcl.collectd"
+else
+  default[:collectd][:base_dir] = "/var/lib/collectd"
+  default[:collectd][:cfg_dir] = "/etc/collectd"
+  default[:collectd][:cfg_group] = "root"
+  default[:collectd][:plugin_dir] = "/usr/lib/collectd"
+  default[:collectd][:types_db] = ["/usr/share/collectd/types.db"]
+  default[:collectd][:pkg_name] = "collectd-core"
+  default[:collectd][:svc_name] = "collectd"
+end
 
 default[:collectd][:collectd_web][:path] = "/srv/collectd_web"
 default[:collectd][:collectd_web][:hostname] = "collectd"

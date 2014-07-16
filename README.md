@@ -4,15 +4,18 @@ Configure and install the [collectd](http://collectd.org/) monitoring daemon.
 
 # REQUIREMENTS #
 
-This cookbook has only been tested on Ubuntu 10.04.
+This cookbook has only been tested on Ubuntu 10.04 and Mac OS X 10.8. The homebrew cookbook is required to install the collectd package on Mac OS X.
 
 To use the `collectd::collectd_web` recipe you need the [apache2](https://github.com/opscode/cookbooks/tree/master/apache2) cookbook.
+
+To use this cookbook on Mac OS X, you need to include the [homebrew](https://github.com/opscode-cookbooks/homebrew) cookbook in your node's run list before including this cookbook.
 
 The [collectd_plugins](https://github.com/coderanger/chef-collectd_plugins) cookbook is not required, but provides many common plugin definitions for easy reuse.
 
 # ATTRIBUTES #
 
 * collectd.basedir - Base folder for collectd output data.
+* collectd.cfg_dir - Base folder for collectd configuration files.
 * collectd.plugin_dir - Base folder to find plugins.
 * collectd.types_db - Array of files to read graph type information from.
 * collectd.interval - Time period in seconds to wait between data reads.

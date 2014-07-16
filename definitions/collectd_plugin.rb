@@ -18,9 +18,9 @@
 #
 
 define :collectd_plugin, :options => {}, :template => nil, :cookbook => nil do
-  template "/etc/collectd/plugins/#{params[:name]}.conf" do
+  template "#{node[:collectd][:cfg_dir]}/plugins/#{params[:name]}.conf" do
     owner "root"
-    group "root"
+    group node[:collectd][:cfg_group]
     mode "644"
     if params[:template].nil?
       source "plugin.conf.erb"
@@ -36,7 +36,7 @@ end
 
 define :collectd_python_plugin, :options => {}, :module => nil, :path => nil do
   begin
-    t = resources(:template => "/etc/collectd/plugins/python.conf")
+    t = resources(:template => "#{node[:collectd][:cfg_dir]}/plugins/python.conf")
   rescue ArgumentError,Chef::Exceptions::ResourceNotFound
     collectd_plugin "python" do
       options :paths=>[node[:collectd][:plugin_dir]], :modules=>{}
